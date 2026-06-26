@@ -60,7 +60,17 @@ app.use("/api", limiter);
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Allow images to be loaded from same server
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: (origin, callback) => {
+    // Allow same-origin requests (no origin header) and configured frontend URL(s)
+    const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+      .split(",")
+      .map((o) => o.trim());
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS: origin ${origin} not allowed`));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());

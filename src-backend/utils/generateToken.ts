@@ -6,10 +6,12 @@ export const generateToken = (res: Response, userId: string) => {
     expiresIn: "30d",
   });
 
+  const isProduction = process.env.NODE_ENV !== "development";
+
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "strict",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     maxAge: 30 * 24 * 60 * 60 * 1000,
   });
 };
