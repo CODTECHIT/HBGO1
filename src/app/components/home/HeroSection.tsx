@@ -23,11 +23,30 @@ const FALLBACK_BANNERS = [
   },
 ];
 
+function HeroSkeleton() {
+  return (
+    <section className="bg-background pt-4 pb-8">
+      {/* Category pills skeleton */}
+      <div className="overflow-x-auto mb-6" style={{ scrollbarWidth: "none" }}>
+        <div className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto" style={{ minWidth: "max-content" }}>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="h-9 w-20 rounded-full bg-muted animate-pulse" />
+          ))}
+        </div>
+      </div>
+      {/* Banner skeleton */}
+      <div className="relative overflow-hidden mx-4 rounded-3xl max-w-[1400px] lg:mx-auto border border-border/50">
+        <div className="h-64 sm:h-72 md:h-96 lg:h-[32rem] bg-muted animate-pulse rounded-3xl" />
+      </div>
+    </section>
+  );
+}
+
 export function HeroSection() {
   const [currentBanner, setCurrentBanner] = useState(0);
 
   // Fetch hero banners from DB
-  const { data: dbBanners } = useQuery({
+  const { data: dbBanners, isLoading: bannersLoading } = useQuery({
     queryKey: ["hero-banners"],
     queryFn: async () => {
       const { data } = await api.get("/banners?type=hero");
@@ -35,11 +54,12 @@ export function HeroSection() {
     },
   });
 
-  // Fetch categories for the filter pills
-  const { data: categories } = useGetCategories();
+  const { data: categories, isLoading: catsLoading } = useGetCategories();
   const [activeCategory, setActiveCategory] = useState("All");
 
   const banners = dbBanners && dbBanners.length > 0 ? dbBanners : FALLBACK_BANNERS;
+
+  if (bannersLoading && catsLoading) return <HeroSkeleton />;
 
   useEffect(() => {
     if (banners.length <= 1) return;
