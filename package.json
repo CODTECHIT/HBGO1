@@ -90,7 +90,8 @@
     "morgan": "^1.10.0",
     "resend": "^3.0.0",
     "@sentry/node": "^8.0.0",
-    "@sentry/profiling-node": "^8.0.0"
+    "@sentry/profiling-node": "^8.0.0",
+    "@vercel/node": "^3.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.1.12",
@@ -107,7 +108,8 @@
     "@types/streamifier": "^0.1.2",
     "typescript": "^5.2.2",
     "@types/compression": "^1.7.5",
-    "@types/morgan": "^1.9.9"
+    "@types/morgan": "^1.9.9",
+    "@types/vercel__node": "^3.0.0"
   },
   "peerDependencies": {
     "react": "18.3.1",
