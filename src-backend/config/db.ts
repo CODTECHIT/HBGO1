@@ -14,9 +14,8 @@ export const connectDB = async () => {
 
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
-      maxPoolSize: 10,                  // reuse connections across requests
-      serverSelectionTimeoutMS: 5000,   // fail fast if DB unreachable
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     };
 
