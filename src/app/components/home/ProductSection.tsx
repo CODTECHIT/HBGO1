@@ -30,17 +30,16 @@ export function ProductSection({
   sort?: "newest" | "top";
 }) {
   const { data: products, isLoading } = useQuery({
-    queryKey: ["products", sort],
+    queryKey: ["products-all"],  // shared key — both sections reuse one fetch
     queryFn: async () => {
       const { data } = await api.get("/products");
-      const all = (data.data as any[]);
+      return data.data as any[];
+    },
+    select: (all) => {
       if (sort === "newest") {
-        // Sort by createdAt descending
         return [...all].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 12);
-      } else {
-        // "top" — sort by rating then by stock, take different slice
-        return [...all].sort((a, b) => (b.rating || 0) - (a.rating || 0) || (a.stock || 0) - (b.stock || 0));
       }
+      return [...all].sort((a, b) => (b.rating || 0) - (a.rating || 0) || (a.stock || 0) - (b.stock || 0));
     },
   });
 

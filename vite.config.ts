@@ -12,5 +12,22 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split vendor chunks so browser can cache them separately
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router'],
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select', '@radix-ui/react-tabs', '@radix-ui/react-tooltip'],
+          'chart-vendor': ['recharts'],
+          'query-vendor': ['@tanstack/react-query'],
+          'motion-vendor': ['motion'],
+          'icons': ['lucide-react'],
+        }
+      }
+    },
+    // Increase chunk size warning limit slightly
+    chunkSizeWarningLimit: 600,
   }
 })
