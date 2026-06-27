@@ -8,6 +8,14 @@ const getTransporter = () => {
     return null;
   }
 
+  const emailUser = process.env.EMAIL_USER;
+  const emailPassword = process.env.EMAIL_PASSWORD;
+
+  if (!emailUser || !emailPassword) {
+    console.warn("EMAIL_USER or EMAIL_PASSWORD environment variables are missing.");
+    return null;
+  }
+
   const isGmail = (process.env.EMAIL_SERVICE || "gmail").toLowerCase() === "gmail";
 
   if (isGmail) {
@@ -16,8 +24,8 @@ const getTransporter = () => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        user: emailUser,
+        pass: emailPassword,
       },
       tls: {
         rejectUnauthorized: false
@@ -28,8 +36,8 @@ const getTransporter = () => {
   return nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE || "gmail",
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
+      user: emailUser,
+      pass: emailPassword,
     },
     tls: {
       rejectUnauthorized: false
