@@ -148,12 +148,14 @@ export function Header() {
               )}
             </Link>
 
-            {/* Profile / Dashboard - Hidden for admin */}
-            {user?.role !== "admin" && (
-              <Link to="/profile" aria-label="Profile" className="hover:opacity-70 transition-opacity p-1">
-                <User size={20} className="stroke-[1.8]" />
-              </Link>
-            )}
+            {/* Profile / Dashboard */}
+            <Link 
+              to={user?.role === "admin" ? "/admin" : "/profile"} 
+              aria-label={user?.role === "admin" ? "Admin Dashboard" : "Profile"} 
+              className="hover:opacity-70 transition-opacity p-1"
+            >
+              <User size={20} className="stroke-[1.8]" />
+            </Link>
           </div>
         </div>
 
@@ -200,12 +202,14 @@ export function Header() {
               )}
             </Link>
 
-            {/* Profile / Dashboard - Hidden for admin */}
-            {user?.role !== "admin" && (
-              <Link to="/profile" className="text-foreground p-1.5" aria-label="Profile">
-                <User size={18} className="stroke-[1.8]" />
-              </Link>
-            )}
+            {/* Profile / Dashboard */}
+            <Link 
+              to={user?.role === "admin" ? "/admin" : "/profile"} 
+              className="text-foreground p-1.5" 
+              aria-label={user?.role === "admin" ? "Admin Dashboard" : "Profile"}
+            >
+              <User size={18} className="stroke-[1.8]" />
+            </Link>
 
             {/* Cart */}
             <Link to="/cart" className="text-foreground p-1.5 relative" aria-label="Cart">
@@ -293,8 +297,14 @@ export function Header() {
             Quick Links
           </div>
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-primary transition-colors border-b border-border text-xs uppercase">Home</Link>
-          <Link to="/orders" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-primary transition-colors border-b border-border text-xs uppercase">My Orders</Link>
-          <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-primary transition-colors text-xs uppercase">My Profile</Link>
+          {user?.role === "admin" ? (
+            <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-primary transition-colors text-xs uppercase">Admin Dashboard</Link>
+          ) : (
+            <>
+              <Link to="/orders" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-primary transition-colors border-b border-border text-xs uppercase">My Orders</Link>
+              <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="py-2 hover:text-primary transition-colors text-xs uppercase">My Profile</Link>
+            </>
+          )}
         </div>
       )}
     </header>
