@@ -16,14 +16,21 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
       return next(new ErrorResponse("Order is already paid", 400));
     }
 
-    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    const rawKeyId = process.env.RAZORPAY_KEY_ID;
+    const rawKeySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!rawKeyId || !rawKeySecret) {
       // Fallback mode if keys are missing
       return res.status(200).json({ success: true, message: "COD Fallback Mode", data: { fallback: true } });
     }
 
-    const instance = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    const keyId = rawKeyId.replace(/['"]/g, "").trim();
+    const keySecret = rawKeySecret.replace(/['"]/g, "").trim();
+
+    const RazorpayConstructor = (Razorpay as any).default || Razorpay;
+    const instance = new RazorpayConstructor({
+      key_id: keyId,
+      key_secret: keySecret,
     });
 
     const options = {
@@ -43,7 +50,7 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
         id: razorpayOrder.id,
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
-        key_id: process.env.RAZORPAY_KEY_ID,
+        key_id: keyId,
       },
     });
   } catch (error: any) {
@@ -55,13 +62,14 @@ export const verifyPayment = async (req: Request, res: Response, next: NextFunct
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } = req.body;
     
-    if (!process.env.RAZORPAY_KEY_SECRET) {
+    const keySecret = process.env.RAZORPAY_KEY_SECRET?.replace(/['"]/g, "").trim();
+    if (!keySecret) {
       return next(new ErrorResponse("Razorpay secret not configured", 500));
     }
 
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", keySecret)
       .update(sign.toString())
       .digest("hex");
 
@@ -130,7 +138,7 @@ export const handleRazorpayWebhook = async (req: Request, res: Response, next: N
       return res.status(400).json({ success: false, message: "Signature is missing" });
     }
 
-    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET?.replace(/['"]/g, "").trim();
     if (!webhookSecret) {
       return res.status(500).json({ success: false, message: "Webhook secret is not configured" });
     }
