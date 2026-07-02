@@ -7,8 +7,10 @@ import { AddressForm, AddressData } from "../components/checkout/AddressForm";
 import { OrderSummary } from "../components/checkout/OrderSummary";
 import { orderService } from "../services/orderService";
 import { toast } from "sonner";
+import { useGetSettings } from "../hooks/useData";
 
 export function Checkout() {
+  const { data: settings } = useGetSettings();
   const cartItems = useCartStore((state) => state.cartItems);
   const clearCart = useCartStore((state) => state.clearCart);
   const { isAuthenticated } = useAuthStore();
@@ -89,7 +91,7 @@ export function Checkout() {
   };
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price || 0) * item.quantity, 0);
-  const deliveryCharge = subtotal > 0 ? 50 : 0;
+  const deliveryCharge = subtotal > 0 ? (settings?.shippingCharge ?? 50) : 0;
   const total = subtotal + deliveryCharge;
 
   const loadRazorpayScript = () => {

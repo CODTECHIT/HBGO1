@@ -17,8 +17,8 @@ export function Categories() {
   return (
     <>
       <Helmet>
-        <title>All Categories | SKML Mobiles</title>
-        <meta name="description" content="Browse all categories of products at SKML Mobiles." />
+        <title>All Categories | HBGO</title>
+        <meta name="description" content="Browse all categories of products at HBGO." />
       </Helmet>
 
       <div className="max-w-[1400px] mx-auto px-4 py-8">
@@ -35,24 +35,41 @@ export function Categories() {
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {categories.map((cat: any) => (
-              <Link
-                key={cat._id}
-                to={`/categories/${cat.slug || cat.name.toLowerCase().replace(/ /g, '-')}`}
-                className="bg-card border border-border rounded-xl p-4 flex flex-col items-center gap-3 hover:border-accent hover:shadow-md transition-all group"
-              >
-                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-border group-hover:border-accent transition-colors">
-                  <img
-                    src={cat.image || "/placeholder.png"}
-                    alt={cat.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <span className="font-poppins font-medium text-foreground text-sm text-center group-hover:text-primary transition-colors">
-                  {cat.name}
-                </span>
-              </Link>
-            ))}
+            {categories.map((cat: any) => {
+              const lowerName = cat.name.toLowerCase();
+              let borderColor = "";
+              if (lowerName.includes("men")) borderColor = "#132B57";
+              else if (lowerName.includes("women")) borderColor = "#DD500B";
+              else if (lowerName.includes("kid")) borderColor = "#16773A";
+              else if (lowerName.includes("footwear")) borderColor = "#1E3A5F";
+              else if (lowerName.includes("beauty")) borderColor = "#D4AF37";
+
+              return (
+                <Link
+                  key={cat._id}
+                  to={`/categories/${cat.slug || cat.name.toLowerCase().replace(/ /g, '-')}`}
+                  className="bg-card border border-border rounded-xl p-4 flex flex-col items-center gap-3 hover:shadow-md transition-all group"
+                  style={borderColor ? { borderBottomColor: borderColor, borderBottomWidth: '4px' } : {}}
+                >
+                  <div 
+                    className="w-20 h-20 rounded-full overflow-hidden border-2 border-border transition-colors"
+                    style={borderColor ? { borderColor: borderColor } : {}}
+                  >
+                    <img
+                      src={cat.image || "/placeholder.png"}
+                      alt={cat.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <span 
+                    className="font-poppins font-medium text-foreground text-sm text-center transition-colors"
+                    style={borderColor ? { color: borderColor } : {}}
+                  >
+                    {cat.name}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>

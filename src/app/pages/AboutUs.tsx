@@ -1,14 +1,17 @@
 import { Helmet } from "react-helmet-async";
 import { Phone, MapPin, Mail, Award, Users, Star, ShieldCheck } from "lucide-react";
+import { useGetSettings } from "../hooks/useData";
 
 export function AboutUs() {
+  const { data: settings } = useGetSettings();
+
   return (
     <>
       <Helmet>
-        <title>About Us | SKML Mobiles</title>
+        <title>About Us | HBGO</title>
         <meta
           name="description"
-          content="Learn about SKML Mobiles — your trusted destination for smartphones, accessories, and repair services in Yellamanchili."
+          content="Learn about HBGO — your trusted destination for electronics, fashion, and lifestyle products in Kadapa."
         />
       </Helmet>
 
@@ -20,10 +23,10 @@ export function AboutUs() {
             Our Story
           </span>
           <h1 className="font-poppins font-bold text-4xl md:text-5xl text-foreground mb-4 leading-tight">
-            About <span className="text-primary">SKML Mobiles</span>
+            About <span className="text-primary">HBGO</span>
           </h1>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Your one-stop destination for mobiles, accessories, spares, and trusted repair service — serving Yellamanchili and beyond since day one.
+            Your one-stop destination for electronics, fashion, beauty, and home essentials — serving Kadapa and beyond.
           </p>
         </div>
       </section>
@@ -57,19 +60,19 @@ export function AboutUs() {
                 Who We Are
               </span>
               <h2 className="font-poppins font-bold text-3xl text-foreground mb-5 leading-tight">
-                Trusted Mobile Store <br /> in Yellamanchili
+                Trusted E-Commerce <br /> in Kadapa
               </h2>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                SKML Mobiles is a leading mobile retail and wholesale store located near RTC Complex, Yellamanchili. We specialize in the latest smartphones from top brands, genuine accessories, original spare parts, and professional repair services.
+                HBGO is a leading retail and e-commerce store located in Vempalli, Kadapa. We specialize in electronics, men's & women's fashion, footwear, beauty products, and home essentials.
               </p>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                Whether you're looking for the newest flagship phone, budget-friendly options, or need a trusted service centre for your existing device — SKML Mobiles has you covered. We take pride in offering 100% genuine products with transparent pricing and after-sales support.
+                Whether you're looking for the newest gadgets, trendy clothing, or lifestyle products — HBGO has you covered. We take pride in offering quality products with transparent pricing and great support.
               </p>
               <div className="space-y-3">
                 {[
-                  { icon: MapPin, text: "Near RTC Complex, Yellamanchili, Anakapalli Dist – 531055" },
-                  { icon: Mail, text: "skmlmobilesylm@gmail.com" },
-                  { icon: Phone, text: "+91 63002 00986" },
+                  { icon: MapPin, text: settings?.address || "Vempalli, Kadapa, (district), Andhra Pradesh" },
+                  { icon: Mail, text: settings?.email || "[Email To be filled]" },
+                  { icon: Phone, text: settings?.phone || "[Phone To be filled]" },
                 ].map(({ icon: Icon, text }) => (
                   <p key={text} className="flex items-start gap-3 text-sm text-muted-foreground">
                     <Icon size={15} className="text-primary flex-shrink-0 mt-0.5" />
@@ -103,7 +106,7 @@ export function AboutUs() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="text-center mb-12">
             <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider">
-              The Face Behind SKML
+              The Face Behind {settings?.storeName || "HBGO"}
             </span>
             <h2 className="font-poppins font-bold text-3xl text-foreground">Meet the Founder</h2>
           </div>
@@ -113,8 +116,8 @@ export function AboutUs() {
             <div className="flex-shrink-0 relative">
               <div className="w-60 h-72 md:w-72 md:h-80 rounded-3xl overflow-hidden shadow-2xl ring-4 ring-primary/20">
                 <img
-                  src="/image.jpeg"
-                  alt="Founder of SKML Mobiles"
+                  src={settings?.logoUrl || "/image.jpeg"}
+                  alt={`Founder of ${settings?.storeName || "HBGO"}`}
                   className="w-full h-full object-cover object-top"
                 />
               </div>
@@ -127,18 +130,18 @@ export function AboutUs() {
             {/* Founder Bio */}
             <div className="flex-1 text-center md:text-left">
               <h3 className="font-poppins font-bold text-2xl md:text-3xl text-foreground mb-1">
-                SKML Founder
+                Syed Mahammad Gouse & Shaik Habib
               </h3>
-              <p className="text-primary font-semibold text-sm mb-5">SKML Mobiles, Yellamanchili</p>
+              <p className="text-primary font-semibold text-sm mb-5">Founders, HBGO, Kadapa</p>
 
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                With a deep passion for technology and a commitment to serving the local community, our founder established SKML Mobiles with a simple vision — to make quality smartphones and accessories accessible to everyone in Yellamanchili and surrounding areas.
+                With a deep passion for commerce and a commitment to serving the community, our founders established HBGO with a simple vision — to make quality products accessible to everyone in Kadapa and surrounding areas.
               </p>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                From humble beginnings as a small retail counter to a growing e-commerce platform, the journey reflects relentless dedication, hard work, and an unwavering focus on customer satisfaction.
+                From humble beginnings to a growing e-commerce platform, the journey reflects relentless dedication, hard work, and an unwavering focus on customer satisfaction.
               </p>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                "Our customers are our family. Every device we sell, every repair we do — it's all built on trust." — <span className="text-foreground font-medium italic">SKML Founder</span>
+                "Our customers are our family. Every product we sell is built on trust." — <span className="text-foreground font-medium italic">HBGO Founders</span>
               </p>
 
               {/* Social / Highlights */}
@@ -164,14 +167,14 @@ export function AboutUs() {
             Come Visit Us Today
           </h2>
           <p className="text-white/80 text-sm mb-6 max-w-md mx-auto">
-            Walk into our store near RTC Complex, Yellamanchili — or shop right here on our website with home delivery.
+            Walk into our store in {settings?.address || "Vempalli, Kadapa"} — or shop right here on our website with home delivery.
           </p>
           <a
-            href="tel:+916300200986"
+            href={`tel:${settings?.phone}`}
             className="inline-flex items-center gap-2 bg-white text-primary font-poppins font-semibold text-sm px-7 py-3 rounded-full hover:bg-white/90 transition-colors shadow-lg"
           >
             <Phone size={15} />
-            Call Us: +91 63002 00986
+            Contact Us
           </a>
         </div>
       </section>

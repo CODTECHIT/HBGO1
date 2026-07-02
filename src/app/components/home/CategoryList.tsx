@@ -29,24 +29,40 @@ export function CategoryList() {
         >
           {isLoading
             ? Array.from({ length: 8 }).map((_, i) => <CategorySkeleton key={i} />)
-            : (categories || []).map((cat: any) => (
-                <Link
-                  key={cat._id}
-                  to={`/categories/${cat.slug || cat.name.toLowerCase().replace(/ /g, '-')}`}
-                  className="flex flex-col items-center gap-2 group w-[68px] sm:w-20"
-                >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border border-border bg-card group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/10 group-hover:-translate-y-1 transition-all duration-300">
-                    <img
-                      src={cat.image || "/placeholder.png"}
-                      alt={cat.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <span className="text-[11px] font-semibold text-muted-foreground text-center leading-tight group-hover:text-primary transition-colors tracking-wide">
-                    {cat.name}
-                  </span>
-                </Link>
-              ))}
+            : (categories || []).map((cat: any) => {
+                const lowerName = cat.name.toLowerCase();
+                let borderColor = "";
+                if (lowerName.includes("men")) borderColor = "#132B57";
+                else if (lowerName.includes("women")) borderColor = "#DD500B";
+                else if (lowerName.includes("kid")) borderColor = "#16773A";
+                else if (lowerName.includes("footwear")) borderColor = "#1E3A5F";
+                else if (lowerName.includes("beauty")) borderColor = "#D4AF37";
+
+                return (
+                  <Link
+                    key={cat._id}
+                    to={`/categories/${cat.slug || cat.name.toLowerCase().replace(/ /g, '-')}`}
+                    className="flex flex-col items-center gap-2 group w-[68px] sm:w-20"
+                  >
+                    <div 
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border bg-card group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300"
+                      style={{ borderColor: borderColor || 'var(--border)' }}
+                    >
+                      <img
+                        src={cat.image || "/placeholder.png"}
+                        alt={cat.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <span 
+                      className="text-[11px] font-semibold text-center leading-tight transition-colors tracking-wide"
+                      style={{ color: borderColor || 'var(--muted-foreground)' }}
+                    >
+                      {cat.name}
+                    </span>
+                  </Link>
+                );
+              })}
         </div>
       </div>
     </section>

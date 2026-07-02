@@ -23,6 +23,7 @@ import orderRoutes from "./routes/orderRoutes";
 import bannerRoutes from "./routes/bannerRoutes";
 import paymentRoutes from "./routes/paymentRoutes";
 import uploadRoutes from "./routes/uploadRoutes";
+import settingsRoutes from "./routes/settingsRoutes";
 
 import userRoutes from "./routes/userRoutes";
 import analyticsRoutes from "./routes/analyticsRoutes";
@@ -93,6 +94,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/analytics", analyticsRoutes); // Mount analytics routes
 app.use("/api/cart", cartRoutes); // Mount cart routes
+app.use("/api/settings", settingsRoutes);
 
 // Base routes
 app.get("/", (req: Request, res: Response) => {

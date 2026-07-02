@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../api/axios";
 
 // --- PRODUCTS ---
@@ -41,6 +41,30 @@ export const useGetMyOrders = () => {
     queryFn: async () => {
       const { data } = await api.get("/orders");
       return data.data as any[];
+    },
+  });
+};
+
+// --- SETTINGS ---
+export const useGetSettings = () => {
+  return useQuery({
+    queryKey: ["settings"],
+    queryFn: async () => {
+      const { data } = await api.get("/settings");
+      return data.data as any;
+    },
+  });
+};
+
+export const useUpdateSettings = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (settingsData: any) => {
+      const { data } = await api.put("/settings", settingsData);
+      return data.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["settings"] });
     },
   });
 };

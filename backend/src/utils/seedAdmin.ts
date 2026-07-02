@@ -5,8 +5,8 @@ dotenv.config();
 
 export const seedAdmin = async () => {
   try {
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminEmail = process.env.ADMIN_EMAIL || "hbgoadmin@gmail.com";
+    const adminPassword = process.env.ADMIN_PASSWORD || "adminhbgo@123";
 
     if (!adminEmail || !adminPassword) {
       console.log("Admin credentials not found in .env, skipping admin seeding.");

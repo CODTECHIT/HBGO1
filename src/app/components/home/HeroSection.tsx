@@ -25,7 +25,7 @@ const FALLBACK_BANNERS = [
 
 function HeroSkeleton() {
   return (
-    <section className="bg-background pt-4 pb-8">
+    <section className="bg-transparent pt-4 pb-8">
       {/* Category pills skeleton */}
       <div className="overflow-x-auto mb-6" style={{ scrollbarWidth: "none" }}>
         <div className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto" style={{ minWidth: "max-content" }}>
@@ -72,7 +72,7 @@ export function HeroSection() {
 
 
   return (
-    <section className="bg-background pt-4 pb-8">
+    <section className="bg-transparent pt-4 pb-8">
       {/* Category pills — navigate to category pages */}
       <div className="overflow-x-auto mb-6" style={{ scrollbarWidth: "none" }}>
         <div className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto" style={{ minWidth: "max-content" }}>

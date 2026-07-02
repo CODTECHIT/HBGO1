@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router";
 import { useWishlistStore } from "../../store/wishlistStore";
 import { useCartStore } from "../../store/cartStore";
 import { useLocationStore } from "../../store/locationStore";
-import { useGetCategories } from "../../hooks/useData";
+import { useGetCategories, useGetSettings } from "../../hooks/useData";
 import { useAuthStore } from "../../store/authStore";
 
 export function Header() {
@@ -12,6 +12,7 @@ export function Header() {
   const cartCount = useCartStore((state) => state.cartCount);
   const { location: userLocation, isLoading, requestLocation, error, clearError } = useLocationStore();
   const { data: categories } = useGetCategories();
+  const { data: settings } = useGetSettings();
   const user = useAuthStore((state) => state.user);
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -70,15 +71,15 @@ export function Header() {
       </div>
 
       {/* Main Header Row */}
-      <div className="max-w-[1400px] mx-auto px-4 h-[60px] flex items-center justify-between gap-4">
+      <div className="max-w-[1400px] mx-auto px-4 h-[80px] flex items-center justify-between gap-4">
         
         {/* DESKTOP VIEW */}
         {/* Desktop Logo */}
         <Link 
           to="/" 
-          className="hidden md:flex items-center text-xl font-black tracking-[0.18em] text-foreground hover:opacity-80 transition-opacity select-none"
+          className="hidden md:flex items-center hover:opacity-80 transition-opacity select-none"
         >
-          SKML MOBILES
+          <img src={settings?.logoUrl || "/image.jpeg"} alt="HBGO Logo" className="h-14 w-auto object-contain rounded" />
         </Link>
 
         {/* Desktop Categories Navigation */}
@@ -114,7 +115,7 @@ export function Header() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search SKML Mobiles..."
+              placeholder="Search HBGO..."
               className="w-full bg-background border border-border rounded-full pl-4 pr-12 py-1.5 text-[11px] focus:outline-none focus:border-foreground/45 transition-all placeholder:text-muted-foreground/60 font-medium"
             />
             <button
@@ -174,10 +175,9 @@ export function Header() {
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center z-0">
             <Link 
               to="/" 
-              className="text-[14px] font-black tracking-[0.12em] text-foreground uppercase whitespace-nowrap"
+              className="flex items-center justify-center hover:opacity-80 transition-opacity"
             >
-              <span className="hidden sm:inline">SKML MOBILES</span>
-              <span className="sm:hidden">SKML</span>
+              <img src={settings?.logoUrl || "/image.jpeg"} alt="HBGO Logo" className="h-10 w-auto object-contain rounded" />
             </Link>
           </div>
 
@@ -232,7 +232,7 @@ export function Header() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search SKML Mobiles..."
+              placeholder="Search HBGO..."
               className="w-full bg-background border border-border rounded-full pl-4 pr-12 py-1.5 text-xs focus:outline-none focus:border-foreground/50 font-medium"
               autoFocus
             />

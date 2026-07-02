@@ -9,14 +9,14 @@
   --card-foreground: #0F172A;
   --popover: #FFFFFF;
   --popover-foreground: #0F172A;
-  --primary: #1E3A5F;
+  --primary: #132B57;
   --primary-foreground: #FFFFFF;
   --secondary: #F5EFE7;
-  --secondary-foreground: #1E3A5F;
+  --secondary-foreground: #132B57;
   --muted: #F1F5F9;
   --muted-foreground: #64748B;
-  --accent: #D4AF37;
-  --accent-foreground: #1E3A5F;
+  --accent: #DD500B;
+  --accent-foreground: #FFFFFF;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
   --border: #E2E8F0;
@@ -25,21 +25,21 @@
   --switch-background: #CBD5E1;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #D4AF37;
-  --chart-1: #1E3A5F;
-  --chart-2: #D4AF37;
-  --chart-3: #2563EB;
-  --chart-4: #F59E0B;
+  --ring: #DD500B;
+  --chart-1: #132B57;
+  --chart-2: #DD500B;
+  --chart-3: #16773A;
+  --chart-4: #2563EB;
   --chart-5: #10B981;
   --radius: 0.75rem;
   --sidebar: #FFFFFF;
   --sidebar-foreground: #0F172A;
-  --sidebar-primary: #1E3A5F;
+  --sidebar-primary: #132B57;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #F5EFE7;
-  --sidebar-accent-foreground: #1E3A5F;
+  --sidebar-accent-foreground: #132B57;
   --sidebar-border: #E2E8F0;
-  --sidebar-ring: #D4AF37;
+  --sidebar-ring: #DD500B;
 }
 
 .dark {
@@ -50,13 +50,13 @@
   --card-foreground: #F8FAFC;
   --popover: #1E293B;
   --popover-foreground: #F8FAFC;
-  --primary: #D4AF37;
-  --primary-foreground: #0F172A;
+  --primary: #DD500B;
+  --primary-foreground: #FFFFFF;
   --secondary: #334155;
   --secondary-foreground: #F8FAFC;
   --muted: #334155;
   --muted-foreground: #94A3B8;
-  --accent: #1E3A5F;
+  --accent: #132B57;
   --accent-foreground: #F8FAFC;
   --destructive: #EF4444;
   --destructive-foreground: #F8FAFC;
@@ -64,13 +64,13 @@
   --input: #1E293B;
   --input-background: #334155;
   --switch-background: #475569;
-  --ring: #D4AF37;
+  --ring: #DD500B;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --chart-1: #D4AF37;
-  --chart-2: #1E3A5F;
-  --chart-3: #3B82F6;
-  --chart-4: #F59E0B;
+  --chart-1: #DD500B;
+  --chart-2: #132B57;
+  --chart-3: #16773A;
+  --chart-4: #3B82F6;
   --chart-5: #10B981;
   --sidebar: #1E293B;
   --sidebar-foreground: #F8FAFC;
@@ -132,6 +132,12 @@
 
   body {
     @apply bg-background text-foreground;
+    background-image: linear-gradient(to right, rgba(19, 43, 87, 0.08) 1px, transparent 1px);
+    background-size: 60px 100%;
+  }
+  
+  .dark body {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   }
 
   /**

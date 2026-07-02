@@ -6,6 +6,7 @@ import { useCartStore } from "../../store/cartStore";
 import { CheckCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
+import { useGetSettings } from "../../hooks/useData";
 
 function Toast() {
   const toast = useCartStore((state) => state.toast);
@@ -43,12 +44,26 @@ export function MainLayout() {
     }
   }, [isAuthenticated, syncCart]);
 
+  const { data: settings } = useGetSettings();
+
+  useEffect(() => {
+    if (settings?.logoUrl) {
+      let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
+      }
+      link.href = settings.logoUrl;
+    }
+  }, [settings?.logoUrl]);
+
   return (
     <div className="min-h-screen bg-background font-inter pb-16 md:pb-0 flex flex-col">
       <Toast />
       <Header />
       {/* Spacer to push content below the fixed header */}
-      <div className="h-[60px] md:h-[92px] flex-shrink-0" />
+      <div className="h-[80px] md:h-[112px] flex-shrink-0" />
       <main className="flex-1">
         <Outlet />
       </main>

@@ -1,11 +1,14 @@
 import { Zap } from "lucide-react";
+import { useGetSettings } from "../../hooks/useData";
 
-const WHATSAPP_NUMBER = "916300200986";
 const SERVICE_MESSAGE = "Hi, I want to book a mobile service (Display Replacement / Battery Change / Dead Board Recovery)";
 
 export function ServiceStrip() {
+  const { data: settings } = useGetSettings();
+  
   const handleBookService = () => {
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(SERVICE_MESSAGE)}`, "_blank");
+    const whatsapp = settings?.whatsapp || "916300200986";
+    window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(SERVICE_MESSAGE)}`, "_blank");
   };
 
   return (

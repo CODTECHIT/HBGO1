@@ -6,6 +6,7 @@ import { sendInvoice, sendShippingUpdate, sendDeliveryUpdate } from "../services
 import { User } from "../models/User";
 import { Product } from "../models/Product";
 import { Cart } from "../models/Cart";
+import { Settings } from "../models/Settings";
 
 const orderSchema = z.object({
   products: z.array(z.object({
@@ -90,7 +91,8 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
       itemsToUpdate.push({ productId: item.productId, quantity: item.quantity, title: product.title });
     }
 
-    const deliveryCharge = calculatedTotal > 0 ? 50 : 0;
+    const settings = await Settings.findOne() || { shippingCharge: 50 };
+    const deliveryCharge = calculatedTotal > 0 ? (settings.shippingCharge ?? 50) : 0;
     const finalGrandTotal = calculatedTotal + deliveryCharge;
 
     // 2. Deduct stock atomically with rollback protection

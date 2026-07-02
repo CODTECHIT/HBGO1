@@ -1,18 +1,26 @@
 import { Category } from "../types/category";
 
-export const CATEGORIES = ["All", "Mobiles", "Keypad Mobiles", "Accessories", "Spares", "Service"];
+export const CATEGORIES = [
+  "All", 
+  "Electronics", 
+  "Mobile Accessories", 
+  "Men's Fashion", 
+  "Women's Fashion", 
+  "Kids' Fashion", 
+  "Footwear", 
+  "Beauty Products", 
+  "Home & Kitchen"
+];
 
 export const CATEGORY_CIRCLES: Category[] = [
-  { name: "Mobiles", img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&h=120&fit=crop&auto=format" },
-  { name: "Keypad Phones", img: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=120&h=120&fit=crop&auto=format" },
-  { name: "Cases & Pouches", img: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=120&h=120&fit=crop&auto=format" },
-  { name: "Tempered Glass", img: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=120&h=120&fit=crop&auto=format" },
-  { name: "Chargers", img: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=120&h=120&fit=crop&auto=format" },
-  { name: "Cables", img: "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=120&h=120&fit=crop&auto=format" },
+  { name: "Electronics", img: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=120&h=120&fit=crop&auto=format", color: "#132B57" },
+  { name: "Men's Fashion", img: "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=120&h=120&fit=crop&auto=format", color: "#132B57" },
+  { name: "Women's Fashion", img: "https://images.unsplash.com/photo-1617391761159-002f232ff492?w=120&h=120&fit=crop&auto=format", color: "#DD500B" },
+  { name: "Kids' Fashion", img: "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=120&h=120&fit=crop&auto=format", color: "#16773A" },
+  { name: "Footwear", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=120&h=120&fit=crop&auto=format", color: "#1E3A5F" },
+  { name: "Mobile Accessories", img: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=120&h=120&fit=crop&auto=format", color: "#64748B" },
   { name: "Earphones", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=120&h=120&fit=crop&auto=format" },
-  { name: "Power Banks", img: "https://images.unsplash.com/photo-1609592806596-be8db0e52cb7?w=120&h=120&fit=crop&auto=format" },
-  { name: "Buds", img: "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=120&h=120&fit=crop&auto=format" },
-  { name: "Neckbands", img: "https://images.unsplash.com/photo-1625245488600-968b8c2f7fdc?w=120&h=120&fit=crop&auto=format" },
-  { name: "Batteries", img: "https://images.unsplash.com/photo-1620714223084-8fcacc2dfd4d?w=120&h=120&fit=crop&auto=format" },
-  { name: "Speakers", img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=120&h=120&fit=crop&auto=format" },
+  { name: "Smartwatches", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&h=120&fit=crop&auto=format" },
+  { name: "Beauty Products", img: "https://images.unsplash.com/photo-1596462502278-27bf85033e5a?w=120&h=120&fit=crop&auto=format", color: "#D4AF37" },
+  { name: "Home & Kitchen", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=120&h=120&fit=crop&auto=format" },
 ];

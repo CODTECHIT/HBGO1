@@ -4,6 +4,8 @@ build/
 .env
 .env.*
 !.env.example
+backend/.env
+backend/.env.*
 .DS_Store
 coverage/
 npm-debug.log*

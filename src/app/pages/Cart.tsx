@@ -2,12 +2,14 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
 import { useCartStore } from "../store/cartStore";
 import { ShoppingBag } from "lucide-react";
+import { useGetSettings } from "../hooks/useData";
 
 export function Cart() {
+  const { data: settings } = useGetSettings();
   const { cartItems, cartCount, removeFromCart, updateQuantity } = useCartStore();
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price || 0) * item.quantity, 0);
-  const deliveryCharge = subtotal > 0 ? 50 : 0;
+  const deliveryCharge = subtotal > 0 ? (settings?.shippingCharge ?? 50) : 0;
   const total = subtotal + deliveryCharge;
 
   return (
