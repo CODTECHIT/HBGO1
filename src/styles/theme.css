@@ -3,83 +3,83 @@
 :root {
   --font-size: 16px;
   /* Premium Navy & Gold E-Commerce Theme */
-  --background: #FDFCFA;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --primary: #132B57;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F5EFE7;
-  --secondary-foreground: #132B57;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --accent: #DD500B;
-  --accent-foreground: #FFFFFF;
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
-  --border: #E2E8F0;
-  --input: #FFFFFF;
-  --input-background: #F8FAFC;
-  --switch-background: #CBD5E1;
+  --background: #eef2f7;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #132b57;
+  --primary-foreground: #ffffff;
+  --secondary: #f5efe7;
+  --secondary-foreground: #132b57;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #dd500b;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #ffffff;
+  --input-background: #f8fafc;
+  --switch-background: #cbd5e1;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #DD500B;
-  --chart-1: #132B57;
-  --chart-2: #DD500B;
-  --chart-3: #16773A;
-  --chart-4: #2563EB;
-  --chart-5: #10B981;
+  --ring: #dd500b;
+  --chart-1: #132b57;
+  --chart-2: #dd500b;
+  --chart-3: #16773a;
+  --chart-4: #2563eb;
+  --chart-5: #10b981;
   --radius: 0.75rem;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #132B57;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F5EFE7;
-  --sidebar-accent-foreground: #132B57;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #DD500B;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #132b57;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5efe7;
+  --sidebar-accent-foreground: #132b57;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #dd500b;
 }
 
 .dark {
   /* Premium Navy & Gold Dark Theme */
-  --background: #0F172A;
-  --foreground: #F8FAFC;
-  --card: #1E293B;
-  --card-foreground: #F8FAFC;
-  --popover: #1E293B;
-  --popover-foreground: #F8FAFC;
-  --primary: #DD500B;
-  --primary-foreground: #FFFFFF;
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --primary: #dd500b;
+  --primary-foreground: #ffffff;
   --secondary: #334155;
-  --secondary-foreground: #F8FAFC;
+  --secondary-foreground: #f8fafc;
   --muted: #334155;
-  --muted-foreground: #94A3B8;
-  --accent: #132B57;
-  --accent-foreground: #F8FAFC;
-  --destructive: #EF4444;
-  --destructive-foreground: #F8FAFC;
+  --muted-foreground: #94a3b8;
+  --accent: #132b57;
+  --accent-foreground: #f8fafc;
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
   --border: #334155;
-  --input: #1E293B;
+  --input: #1e293b;
   --input-background: #334155;
   --switch-background: #475569;
-  --ring: #DD500B;
+  --ring: #dd500b;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --chart-1: #DD500B;
-  --chart-2: #132B57;
-  --chart-3: #16773A;
-  --chart-4: #3B82F6;
-  --chart-5: #10B981;
-  --sidebar: #1E293B;
-  --sidebar-foreground: #F8FAFC;
-  --sidebar-primary: #D4AF37;
-  --sidebar-primary-foreground: #0F172A;
+  --chart-1: #dd500b;
+  --chart-2: #132b57;
+  --chart-3: #16773a;
+  --chart-4: #3b82f6;
+  --chart-5: #10b981;
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #d4af37;
+  --sidebar-primary-foreground: #0f172a;
   --sidebar-accent: #334155;
-  --sidebar-accent-foreground: #F8FAFC;
+  --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #334155;
-  --sidebar-ring: #D4AF37;
+  --sidebar-ring: #d4af37;
 }
 
 @theme inline {
@@ -132,12 +132,20 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: linear-gradient(to right, rgba(19, 43, 87, 0.08) 1px, transparent 1px);
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(238, 242, 247, 0.96),
+        rgba(224, 231, 240, 1)
+      ),
+      linear-gradient(to right, rgba(19, 43, 87, 0.06) 1px, transparent 1px);
     background-size: 60px 100%;
   }
-  
+
   .dark body {
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-image:
+      linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 1)),
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   }
 
   /**

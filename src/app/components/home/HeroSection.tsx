@@ -10,7 +10,8 @@ const FALLBACK_BANNERS = [
     title: "Best Mobiles at Best Prices",
     subtitle: "Shop top brands — Apple, Samsung, Vivo, Oppo & more",
     tag: "NEW ARRIVALS",
-    image: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=1280&q=80",
+    image:
+      "https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=1280&q=80",
     redirectUrl: "/categories",
   },
   {
@@ -18,19 +19,26 @@ const FALLBACK_BANNERS = [
     title: "Accessories Sale",
     subtitle: "Earphones, cases, chargers — huge discounts",
     tag: "SALE",
-    image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=1280&q=80",
+    image:
+      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=1280&q=80",
     redirectUrl: "/categories",
   },
 ];
 
 function HeroSkeleton() {
   return (
-    <section className="bg-transparent pt-4 pb-8">
+    <section className="pt-4 pb-8 rounded-[2rem] mx-2 sm:mx-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 shadow-[0_24px_80px_rgba(15,23,42,0.25)]">
       {/* Category pills skeleton */}
       <div className="overflow-x-auto mb-6" style={{ scrollbarWidth: "none" }}>
-        <div className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto" style={{ minWidth: "max-content" }}>
+        <div
+          className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto"
+          style={{ minWidth: "max-content" }}
+        >
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-9 w-20 rounded-full bg-muted animate-pulse" />
+            <div
+              key={i}
+              className="h-9 w-20 rounded-full bg-muted animate-pulse"
+            />
           ))}
         </div>
       </div>
@@ -57,7 +65,8 @@ export function HeroSection() {
   const { data: categories, isLoading: catsLoading } = useGetCategories();
   const location = useLocation();
 
-  const banners = dbBanners && dbBanners.length > 0 ? dbBanners : FALLBACK_BANNERS;
+  const banners =
+    dbBanners && dbBanners.length > 0 ? dbBanners : FALLBACK_BANNERS;
 
   // useEffect MUST be before any early return (Rules of Hooks)
   useEffect(() => {
@@ -70,12 +79,14 @@ export function HeroSection() {
 
   if (bannersLoading && catsLoading) return <HeroSkeleton />;
 
-
   return (
-    <section className="bg-transparent pt-4 pb-8">
+    <section className="pt-4 pb-8 rounded-[2rem] mx-2 sm:mx-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 shadow-[0_24px_80px_rgba(15,23,42,0.25)]">
       {/* Category pills — navigate to category pages */}
       <div className="overflow-x-auto mb-6" style={{ scrollbarWidth: "none" }}>
-        <div className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto" style={{ minWidth: "max-content" }}>
+        <div
+          className="flex items-center gap-3 px-4 py-2 max-w-[1400px] mx-auto"
+          style={{ minWidth: "max-content" }}
+        >
           {/* "All" pill */}
           <Link
             to="/categories"
@@ -110,7 +121,7 @@ export function HeroSection() {
       </div>
 
       {/* Hero banner carousel */}
-      <div className="relative overflow-hidden mx-4 rounded-3xl max-w-[1400px] lg:mx-auto border border-border/50 shadow-2xl">
+      <div className="relative overflow-hidden mx-4 rounded-3xl max-w-[1400px] lg:mx-auto border border-white/10 shadow-2xl shadow-slate-950/40">
         <div className="relative h-64 sm:h-72 md:h-96 lg:h-[32rem] bg-secondary">
           {banners.map((banner: any, i: number) => (
             <div
@@ -122,7 +133,8 @@ export function HeroSection() {
                 alt={banner.title}
                 className="w-full h-full object-cover"
               />
-
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.82)_0%,rgba(15,23,42,0.55)_48%,rgba(15,23,42,0.18)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_25%,rgba(255,255,255,0.08),transparent_34%),radial-gradient(circle_at_78%_22%,rgba(221,80,11,0.15),transparent_28%)]" />
             </div>
           ))}
 
@@ -157,7 +169,9 @@ export function HeroSection() {
                   onClick={() => setCurrentBanner(i)}
                   aria-label={`Banner ${i + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-500 ${
-                    i === currentBanner ? "bg-primary w-8" : "bg-primary/20 w-2 hover:bg-primary/50"
+                    i === currentBanner
+                      ? "bg-primary w-8"
+                      : "bg-primary/20 w-2 hover:bg-primary/50"
                   }`}
                 />
               ))}
