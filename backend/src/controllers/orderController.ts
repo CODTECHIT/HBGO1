@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
 import { Order } from "../models/Order";
 import { ErrorResponse } from "../utils/errorResponse";
 import { z } from "zod";
@@ -63,10 +64,20 @@ export const getOrderById = async (req: Request, res: Response, next: NextFuncti
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const idempotencyKey = req.headers["x-idempotency-key"] as string;
+
+    if (idempotencyKey) {
+      const existingOrder = await Order.findOne({ userId: (req as any).user._id, idempotencyKey });
+      if (existingOrder) {
+        return res.status(200).json({ success: true, message: "Order already exists (Idempotent)", data: existingOrder });
+      }
+    }
+
     const data = orderSchema.parse(req.body);
 
     // 1. Recalculate prices and total amount on the backend using database values
     let calculatedTotal = 0;
+    let totalTax = 0;
     const verifiedProducts = [];
     const itemsToUpdate = [];
 
@@ -80,7 +91,12 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
       }
 
       const price = product.discountPrice != null ? product.discountPrice : product.price;
-      calculatedTotal += price * item.quantity;
+      const subtotal = price * item.quantity;
+      calculatedTotal += subtotal;
+
+      const taxRate = (product as any).taxRate || 18;
+      // Extract tax from inclusive price
+      totalTax += subtotal - (subtotal / (1 + taxRate / 100));
 
       verifiedProducts.push({
         productId: product._id,
@@ -95,40 +111,49 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
     const deliveryCharge = calculatedTotal > 0 ? (settings.shippingCharge ?? 50) : 0;
     const finalGrandTotal = calculatedTotal + deliveryCharge;
 
-    // 2. Deduct stock atomically with rollback protection
-    const deductedItems = [];
+    const cgst = totalTax / 2;
+    const sgst = totalTax / 2;
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    let order;
     try {
+      // 2. Deduct stock atomically within transaction
       for (const item of itemsToUpdate) {
         const updatedProduct = await Product.findOneAndUpdate(
           { _id: item.productId, stock: { $gte: item.quantity } },
           { $inc: { stock: -item.quantity } },
-          { new: true }
+          { session, new: true }
         );
         if (!updatedProduct) {
           throw new Error(`Insufficient stock for product: ${item.title}`);
         }
-        deductedItems.push({ productId: item.productId, quantity: item.quantity });
       }
-    } catch (err: any) {
-      // Rollback any stocks successfully deducted before the failure
-      for (const rollbackItem of deductedItems) {
-        await Product.findByIdAndUpdate(rollbackItem.productId, {
-          $inc: { stock: rollbackItem.quantity }
-        });
-      }
-      return next(new ErrorResponse(err.message || "Failed to deduct stock atomically", 400));
-    }
 
-    // 3. Create order with backend-calculated prices and total
-    const order = await Order.create({
-      userId: (req as any).user._id,
-      products: verifiedProducts,
-      total: finalGrandTotal,
-      paymentMethod: data.paymentMethod,
-      address: data.address,
-      paymentStatus: "Pending",
-      orderStatus: "Pending"
-    });
+      // 3. Create order within transaction
+      const orderDocs = await Order.create([{
+        userId: (req as any).user._id,
+        products: verifiedProducts,
+        subtotal: calculatedTotal,
+        shippingCharge: deliveryCharge,
+        taxDetails: { totalTax, cgst, sgst, igst: 0 },
+        total: finalGrandTotal,
+        paymentMethod: data.paymentMethod,
+        idempotencyKey, // Save the idempotency key to prevent duplicates
+        address: data.address,
+        paymentStatus: "Pending",
+        orderStatus: "Pending"
+      }], { session });
+      
+      order = orderDocs[0];
+      await session.commitTransaction();
+    } catch (err: any) {
+      await session.abortTransaction();
+      return next(new ErrorResponse(err.message || "Failed to place order atomically", 400));
+    } finally {
+      session.endSession();
+    }
 
     if (data.paymentMethod === "COD") {
       // Clear backend cart immediately for COD
@@ -223,15 +248,6 @@ export const updateOrder = async (req: Request, res: Response, next: NextFunctio
           (data.trackingUrl !== undefined && data.trackingUrl !== oldTrackingUrl && data.trackingUrl.trim() !== "")
         );
 
-        console.log("=== DIAGNOSTIC ORDER EMAIL LOG ===");
-        console.log("Order ID:", order._id);
-        console.log("User Email:", userEmail);
-        console.log("Old Status:", oldStatus, "-> New Status:", order.orderStatus);
-        console.log("Old Tracking ID:", oldTrackingId, "-> New Tracking ID:", data.trackingId);
-        console.log("Old Tracking URL:", oldTrackingUrl, "-> New Tracking URL:", data.trackingUrl);
-        console.log("isStatusChangedToShipped:", isStatusChangedToShipped);
-        console.log("isTrackingInfoUpdated:", isTrackingInfoUpdated);
-        console.log("=================================");
 
         if (isStatusChangedToShipped || isTrackingInfoUpdated) {
           const trackingUrl = order.trackingUrl || (order.trackingId ? `${process.env.FRONTEND_URL || "http://localhost:5173"}/tracking/${order.trackingId}` : "");

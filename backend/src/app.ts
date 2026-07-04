@@ -28,6 +28,7 @@ import settingsRoutes from "./routes/settingsRoutes";
 import userRoutes from "./routes/userRoutes";
 import analyticsRoutes from "./routes/analyticsRoutes";
 import cartRoutes from "./routes/cartRoutes";
+import wishlistRoutes from "./routes/wishlistRoutes";
 
 // Init Sentry
 initSentry();
@@ -95,6 +96,7 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/analytics", analyticsRoutes); // Mount analytics routes
 app.use("/api/cart", cartRoutes); // Mount cart routes
 app.use("/api/settings", settingsRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 // Base routes
 app.get("/", (req: Request, res: Response) => {

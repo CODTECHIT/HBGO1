@@ -9,8 +9,11 @@ const userSchema = new mongoose.Schema(
     phone: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["customer", "admin"], default: "customer" },
+    isEmailVerified: { type: Boolean, default: false },
+    emailVerificationToken: { type: String },
     resetPasswordToken: { type: String },
     resetPasswordExpire: { type: Date },
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );

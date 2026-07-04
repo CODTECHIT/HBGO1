@@ -17,6 +17,8 @@ const Categories = lazy(() => import("../pages/Categories").then(m => ({ default
 const CategoryProducts = lazy(() => import("../pages/CategoryProducts").then(m => ({ default: m.CategoryProducts })));
 const Search = lazy(() => import("../pages/Search").then(m => ({ default: m.Search })));
 const AboutUs = lazy(() => import("../pages/AboutUs").then(m => ({ default: m.AboutUs })));
+const VerifyEmail = lazy(() => import("../pages/VerifyEmail").then(m => ({ default: m.VerifyEmail })));
+const Wishlist = lazy(() => import("../pages/Wishlist").then(m => ({ default: m.Wishlist })));
 
 // Admin
 const ProtectedAdminRoute = lazy(() => import("../components/admin/ProtectedAdminRoute").then(m => ({ default: m.ProtectedAdminRoute })));
@@ -54,6 +56,8 @@ export const router = createBrowserRouter([
       { path: "categories/:slug", element: <Suspense fallback={<Loading />}><CategoryProducts /></Suspense> },
       { path: "search", element: <Suspense fallback={<Loading />}><Search /></Suspense> },
       { path: "about", element: <Suspense fallback={<Loading />}><AboutUs /></Suspense> },
+      { path: "verify-email/:token", element: <Suspense fallback={<Loading />}><VerifyEmail /></Suspense> },
+      { path: "wishlist", element: <Suspense fallback={<Loading />}><Wishlist /></Suspense> },
       { path: "*", element: <div className="p-20 text-center font-poppins"><h1 className="text-4xl font-bold mb-4">404</h1><p className="text-muted-foreground">Page not found</p></div> },
     ],
   },

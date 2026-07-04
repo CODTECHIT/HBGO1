@@ -107,6 +107,24 @@ export const sendPasswordReset = async (email: string, resetUrl: string) => {
   await sendEmail({ to: email, subject, html });
 };
 
+export const sendVerificationEmail = async (email: string, verificationUrl: string) => {
+  const subject = "Verify Your Email Address";
+  const html = `
+    <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #E2E8F0; border-radius: 16px; background-color: #ffffff;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h1 style="color: #0F172A; font-size: 22px; font-weight: 800; letter-spacing: 0.1em; margin: 0;">HBGO</h1>
+      </div>
+      <h2 style="color: #1E293B; font-size: 18px; font-weight: 700; margin-top: 0; margin-bottom: 12px;">Welcome to HBGO!</h2>
+      <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">Please verify your email address to complete your registration by clicking the button below:</p>
+      <div style="text-align: center; margin-bottom: 24px;">
+        <a href="${verificationUrl}" style="display: inline-block; padding: 12px 24px; background-color: #0E7C8C; color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(14, 124, 140, 0.2);">Verify Email</a>
+      </div>
+      <p style="color: #64748B; font-size: 12px; line-height: 1.5; margin: 0;">If you didn't create an account, you can safely ignore this email.</p>
+    </div>
+  `;
+  await sendEmail({ to: email, subject, html });
+};
+
 export const sendOrderConfirmation = async (email: string, orderId: string, total: number) => {
   const subject = `Order Confirmation - ${orderId}`;
   const html = `

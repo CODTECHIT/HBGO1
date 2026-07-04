@@ -4,6 +4,7 @@ import { Heart, ShoppingCart, ArrowLeft } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import { useWishlistStore } from "../store/wishlistStore";
 import { StarRating } from "../components/product/StarRating";
+import { ProductReviews } from "../components/product/ProductReviews";
 import { useGetProductById } from "../hooks/useData";
 
 function ProductDetailSkeleton() {
@@ -135,6 +136,9 @@ export function ProductDetails() {
             </div>
           </div>
         </div>
+
+        {/* Product Reviews */}
+        <ProductReviews productId={productId} />
       </div>
     </>
   );

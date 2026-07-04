@@ -3,8 +3,9 @@ import { User } from "../models/User";
 import { generateToken } from "../utils/generateToken";
 import { ErrorResponse } from "../utils/errorResponse";
 import { z } from "zod";
-import { sendPasswordReset } from "../services/emailService";
+import { sendPasswordReset, sendVerificationEmail } from "../services/emailService";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -35,13 +36,28 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       return next(new ErrorResponse("User already exists", 400));
     }
 
-    const user = await User.create(data);
+    const verificationToken = crypto.randomBytes(20).toString("hex");
+    const hashedToken = crypto.createHash("sha256").update(verificationToken).digest("hex");
+
+    const user = await User.create({
+      ...data,
+      emailVerificationToken: hashedToken,
+    });
+
+    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+    
+    try {
+      await sendVerificationEmail(user.email, verificationUrl);
+    } catch (error) {
+      console.error("Failed to send verification email:", error);
+    }
+
     generateToken(res, user._id.toString());
 
     res.status(201).json({
       success: true,
-      message: "Registered successfully",
-      data: { _id: user._id, name: user.name, email: user.email, phone: user.phone, role: user.role }
+      message: "Registered successfully. Please verify your email.",
+      data: { _id: user._id, name: user.name, email: user.email, phone: user.phone, role: user.role, isEmailVerified: user.isEmailVerified }
     });
   } catch (error) {
     next(error);
@@ -53,16 +69,20 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const data = loginSchema.parse(req.body);
     const user = await User.findOne({ email: data.email });
 
-    if (user && (await (user as any).matchPassword(data.password))) {
-      generateToken(res, user._id.toString());
-      res.status(200).json({
-        success: true,
-        message: "Logged in successfully",
-        data: { _id: user._id, name: user.name, email: user.email, phone: user.phone, role: user.role }
-      });
-    } else {
-      next(new ErrorResponse("Invalid credentials", 401));
+    if (!user || !(await (user as any).matchPassword(data.password))) {
+      return next(new ErrorResponse("Invalid credentials", 401));
     }
+
+    if (!(user as any).isEmailVerified) {
+      return next(new ErrorResponse("Please verify your email before logging in", 403));
+    }
+
+    generateToken(res, user._id.toString());
+    res.status(200).json({
+      success: true,
+      message: "Logged in successfully",
+      data: { _id: user._id, name: user.name, email: user.email, phone: user.phone, role: user.role }
+    });
   } catch (error) {
     next(error);
   }
@@ -84,7 +104,60 @@ export const logout = (req: Request, res: Response) => {
     httpOnly: true,
     expires: new Date(0),
   });
+  res.cookie("refreshToken", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
   res.status(200).json({ success: true, message: "Logged out successfully", data: null });
+};
+
+export const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const hashedToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+    
+    const user = await User.findOne({ emailVerificationToken: hashedToken });
+    
+    if (!user) {
+      return next(new ErrorResponse("Invalid verification token", 400));
+    }
+
+    (user as any).isEmailVerified = true;
+    (user as any).emailVerificationToken = undefined;
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Email verified successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const refresh = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return next(new ErrorResponse("Not authorized, no refresh token", 401));
+    }
+
+    try {
+      const decoded: any = jwt.verify(refreshToken, process.env.JWT_SECRET as string, { algorithms: ["HS256"] });
+      
+      const user = await User.findById(decoded.id).select("-password");
+      if (!user) {
+        return next(new ErrorResponse("User not found", 404));
+      }
+
+      if (!(user as any).isEmailVerified) {
+        return next(new ErrorResponse("Email not verified", 403));
+      }
+
+      generateToken(res, user._id.toString());
+      res.status(200).json({ success: true, message: "Token refreshed successfully" });
+    } catch (err) {
+      return next(new ErrorResponse("Not authorized, refresh token failed", 401));
+    }
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {

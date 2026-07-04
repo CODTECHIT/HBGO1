@@ -15,7 +15,7 @@ export function Profile() {
   const currentTab = searchParams.get("tab");
 
   const wishlist = useWishlistStore((state) => state.wishlist);
-  const removeWishlist = useWishlistStore((state) => state.removeWishlist);
+  const toggleWishlist = useWishlistStore((state) => state.toggleWishlist);
   const addToCart = useCartStore((state) => state.addToCart);
 
   const { data: products, isLoading: productsLoading } = useGetProducts();
@@ -45,7 +45,7 @@ export function Profile() {
 
     const handleMoveToCart = (product: any) => {
       addToCart(product);
-      removeWishlist(product._id);
+      toggleWishlist(product._id);
       toast.success("Moved item to cart");
     };
 
@@ -116,8 +116,7 @@ export function Profile() {
                         </button>
                         <button
                           onClick={() => {
-                            removeWishlist(product._id);
-                            toast.success("Removed from wishlist");
+                            toggleWishlist(product._id);
                           }}
                           className="flex items-center gap-1 text-xs text-destructive hover:underline font-medium"
                         >

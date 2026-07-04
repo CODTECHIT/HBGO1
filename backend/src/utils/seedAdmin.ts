@@ -22,14 +22,27 @@ export const seedAdmin = async () => {
         password: adminPassword,
         phone: "0000000000",
         role: "admin",
+        isEmailVerified: true,
       });
       console.log(`Admin user created automatically: ${admin.email}`);
-    } else if (existingAdmin.role !== "admin") {
-      existingAdmin.role = "admin";
-      await existingAdmin.save();
-      console.log(`User ${existingAdmin.email} promoted to admin.`);
     } else {
-      console.log("Admin user already exists.");
+      let updated = false;
+      if (existingAdmin.role !== "admin") {
+        existingAdmin.role = "admin";
+        updated = true;
+        console.log(`User ${existingAdmin.email} promoted to admin.`);
+      }
+      if (!existingAdmin.isEmailVerified) {
+        existingAdmin.isEmailVerified = true;
+        updated = true;
+        console.log(`Admin user ${existingAdmin.email} verified automatically.`);
+      }
+      
+      if (updated) {
+        await existingAdmin.save();
+      } else {
+        console.log("Admin user already exists and is verified.");
+      }
     }
   } catch (error) {
     console.error("Error seeding admin user:", error);

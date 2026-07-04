@@ -30,6 +30,8 @@ export function Checkout() {
 
   const [errors, setErrors] = useState<Partial<Record<keyof AddressData, string>>>({});
 
+  const [idempotencyKey] = useState(() => crypto.randomUUID());
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -131,7 +133,7 @@ export function Checkout() {
       };
 
       // 1. Create order on database (will be paymentStatus: "Pending")
-      const res = await orderService.createOrder(orderData);
+      const res = await orderService.createOrder(orderData, idempotencyKey);
       if (!res.success) {
         toast.error("Failed to initiate order.");
         setLoading(false);

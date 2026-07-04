@@ -19,10 +19,26 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      useAuthStore.getState().logout();
+  async (error) => {
+    const originalRequest = error.config;
+    
+    // If error is 401 and we haven't already tried to refresh
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
+      try {
+        // Attempt to refresh the token using the httpOnly cookie
+        await axios.post(`${api.defaults.baseURL}/auth/refresh`, {}, { withCredentials: true });
+        
+        // Retry the original request
+        return api(originalRequest);
+      } catch (refreshError) {
+        // Refresh token is expired or invalid
+        useAuthStore.getState().logout();
+        return Promise.reject(refreshError);
+      }
     }
+    
     return Promise.reject(error);
   }
 );

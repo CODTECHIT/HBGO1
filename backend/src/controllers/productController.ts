@@ -3,6 +3,7 @@ import { Product } from "../models/Product";
 import { Category } from "../models/Category";
 import { ErrorResponse } from "../utils/errorResponse";
 import { z } from "zod";
+import { clearCachePrefix } from "../middleware/cacheMiddleware";
 
 const productSchema = z.object({
   title: z.string().min(1),
@@ -13,6 +14,7 @@ const productSchema = z.object({
   discountPrice: z.number().min(0).optional(),
   originalPrice: z.number().min(0).optional(),
   stock: z.number().min(0),
+  taxRate: z.number().min(0).optional().default(18),
   images: z.array(z.string()).optional().default([]),
   status: z.enum(["Active", "Draft"]).optional(),
 });
@@ -43,14 +45,10 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
       }
     }
 
-    // Text search by title or brand (escaped to prevent ReDoS)
+    // Text search using optimized $text index
     if (req.query.q) {
       const q = req.query.q as string;
-      const escapedQuery = q.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-      filter.$or = [
-        { title: { $regex: escapedQuery, $options: "i" } },
-        { brand: { $regex: escapedQuery, $options: "i" } },
-      ];
+      filter.$text = { $search: q };
     }
 
     const products = await Product.find(filter).lean();
@@ -95,6 +93,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
   try {
     const data = productSchema.parse(req.body);
     const product = await Product.create(data);
+    await clearCachePrefix("/api/products");
     res.status(201).json({ success: true, message: "Product created", data: product });
   } catch (error) {
     next(error);
@@ -106,6 +105,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     const data = productSchema.partial().parse(req.body);
     const product = await Product.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true });
     if (!product) return next(new ErrorResponse("Product not found", 404));
+    await clearCachePrefix("/api/products");
     res.status(200).json({ success: true, message: "Product updated", data: product });
   } catch (error) {
     next(error);
@@ -142,6 +142,7 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
     }
 
     await product.deleteOne();
+    await clearCachePrefix("/api/products");
     res.status(200).json({ success: true, message: "Product deleted", data: {} });
   } catch (error) {
     next(error);

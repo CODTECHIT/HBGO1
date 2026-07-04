@@ -5,7 +5,7 @@ export function OrderSummary({ subtotal, deliveryCharge }: { subtotal: number; d
       <h3 className="font-poppins font-bold text-foreground text-lg">Order Summary</h3>
       <div className="space-y-2 text-sm">
         <div className="flex justify-between text-muted-foreground">
-          <span>Subtotal</span>
+          <span>Subtotal (Inclusive of Tax)</span>
           <span className="font-medium text-foreground">₹{subtotal.toLocaleString()}</span>
         </div>
         <div className="flex justify-between text-muted-foreground">
@@ -20,3 +20,4 @@ export function OrderSummary({ subtotal, deliveryCharge }: { subtotal: number; d
     </div>
   );
 }
+

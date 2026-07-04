@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import { ErrorResponse } from "../utils/errorResponse";
+import { AuditLog } from "../models/AuditLog";
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -33,6 +34,20 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
       key_secret: keySecret,
     });
 
+    if (order.razorpayOrderId) {
+      // Prevent creating duplicate Razorpay orders for the same DB order
+      return res.status(200).json({
+        success: true,
+        message: "Existing Order returned",
+        data: {
+          id: order.razorpayOrderId,
+          amount: Math.round(order.total * 100),
+          currency: "INR",
+          key_id: keyId,
+        },
+      });
+    }
+
     const options = {
       amount: Math.round(order.total * 100), // verified amount in paise
       currency: "INR",
@@ -43,6 +58,10 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
     };
 
     const razorpayOrder = await instance.orders.create(options);
+    
+    order.razorpayOrderId = razorpayOrder.id;
+    await order.save();
+
     res.status(200).json({
       success: true,
       message: "Order created",
@@ -81,10 +100,14 @@ export const verifyPayment = async (req: Request, res: Response, next: NextFunct
         const { User } = await import("../models/User");
         const { sendInvoice } = await import("../services/emailService");
 
-        const order = await Order.findById(orderId);
-        if (order) {
-          order.paymentStatus = "Paid";
-          await order.save();
+        const updatedOrder = await Order.findOneAndUpdate(
+          { _id: orderId, paymentStatus: { $ne: "Paid" } },
+          { $set: { paymentStatus: "Paid" } },
+          { new: true }
+        );
+
+        if (updatedOrder) {
+          const order = updatedOrder;
 
           // Clear cart on backend for this user since payment has been completed
           await Cart.deleteOne({ userId: (req as any).user._id });
@@ -120,6 +143,14 @@ export const verifyPayment = async (req: Request, res: Response, next: NextFunct
               console.error("Payment verified, but invoice email failed:", emailErr);
             }
           }
+
+          // Create audit log
+          await AuditLog.create({
+            event: "PAYMENT_CAPTURED",
+            entityType: "Order",
+            entityId: order._id,
+            details: { source: "verification_endpoint", razorpay_payment_id }
+          });
         }
       }
 
@@ -168,10 +199,14 @@ export const handleRazorpayWebhook = async (req: Request, res: Response, next: N
         const { User } = await import("../models/User");
         const { sendInvoice } = await import("../services/emailService");
 
-        const order = await Order.findById(orderId);
-        if (order && order.paymentStatus !== "Paid") {
-          order.paymentStatus = "Paid";
-          await order.save();
+        const updatedOrder = await Order.findOneAndUpdate(
+          { _id: orderId, paymentStatus: { $ne: "Paid" } },
+          { $set: { paymentStatus: "Paid" } },
+          { new: true }
+        );
+
+        if (updatedOrder) {
+          const order = updatedOrder;
 
           // Clear customer cart
           await Cart.deleteOne({ userId: order.userId });
@@ -207,6 +242,14 @@ export const handleRazorpayWebhook = async (req: Request, res: Response, next: N
               console.error("Webhook invoice email sending failed:", emailErr);
             }
           }
+
+          // Create audit log
+          await AuditLog.create({
+            event: "PAYMENT_CAPTURED",
+            entityType: "Order",
+            entityId: order._id,
+            details: { source: "webhook", event }
+          });
         }
       }
     }

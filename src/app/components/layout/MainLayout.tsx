@@ -6,6 +6,7 @@ import { useCartStore } from "../../store/cartStore";
 import { CheckCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
+import { useWishlistStore } from "../../store/wishlistStore";
 import { useGetSettings } from "../../hooks/useData";
 
 function Toast() {
@@ -37,12 +38,14 @@ export function MainLayout() {
   
   const { isAuthenticated } = useAuthStore();
   const syncCart = useCartStore((state) => state.syncCart);
+  const syncWishlist = useWishlistStore((state) => state.syncWishlist);
 
   useEffect(() => {
     if (isAuthenticated) {
       syncCart();
+      syncWishlist();
     }
-  }, [isAuthenticated, syncCart]);
+  }, [isAuthenticated, syncCart, syncWishlist]);
 
   const { data: settings } = useGetSettings();
 
