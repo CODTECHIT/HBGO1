@@ -46,7 +46,7 @@ export function AdminLogin() {
   return (
     <>
       <Helmet>
-        <title>Admin Login | SKML Mobiles</title>
+        <title>Admin Login | HBGO</title>
       </Helmet>
       <div className="min-h-screen bg-muted/30 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">

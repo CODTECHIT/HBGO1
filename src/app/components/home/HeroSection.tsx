@@ -133,8 +133,6 @@ export function HeroSection() {
                 alt={banner.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.82)_0%,rgba(15,23,42,0.55)_48%,rgba(15,23,42,0.18)_100%)]" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_25%,rgba(255,255,255,0.08),transparent_34%),radial-gradient(circle_at_78%_22%,rgba(221,80,11,0.15),transparent_28%)]" />
             </div>
           ))}
 

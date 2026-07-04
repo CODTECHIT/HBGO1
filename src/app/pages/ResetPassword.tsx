@@ -52,7 +52,7 @@ export function ResetPassword() {
   return (
     <>
       <Helmet>
-        <title>Reset Password | SKML Mobiles</title>
+        <title>Reset Password | HBGO</title>
       </Helmet>
       <div className="max-w-[500px] mx-auto px-4 py-20 font-poppins">
         <div className="bg-card border border-border rounded-2xl p-8 shadow-sm">

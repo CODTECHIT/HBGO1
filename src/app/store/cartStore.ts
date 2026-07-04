@@ -192,7 +192,7 @@ export const useCartStore = create<CartState>()(
         await get().syncCart();
       }
     }),
-    { name: "skml-cart" }
+    { name: "hbgo-cart" }
   )
 );
 

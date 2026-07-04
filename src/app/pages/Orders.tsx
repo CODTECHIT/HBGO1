@@ -24,7 +24,7 @@ export function Orders() {
   return (
     <>
       <Helmet>
-        <title>My Orders | SKML Mobiles</title>
+        <title>My Orders | HBGO</title>
       </Helmet>
       <div className="max-w-[1400px] mx-auto px-4 py-8">
         <h1 className="font-poppins font-bold text-2xl text-foreground mb-6">My Orders</h1>

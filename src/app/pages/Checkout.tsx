@@ -169,7 +169,7 @@ export function Checkout() {
           key: key_id,
           amount: razorpayOrder.amount,
           currency: razorpayOrder.currency,
-          name: "SKML MOBILES",
+          name: "HBGO",
           description: "Smartphone Order Payment",
           order_id: razorpayOrder.id,
           handler: async (response: any) => {
@@ -230,7 +230,7 @@ export function Checkout() {
   return (
     <>
       <Helmet>
-        <title>Checkout | SKML Mobiles</title>
+        <title>Checkout | HBGO</title>
       </Helmet>
       <div className="max-w-[1400px] mx-auto px-4 py-8 font-poppins">
         <h1 className="font-bold text-2xl text-foreground mb-6">Checkout</h1>

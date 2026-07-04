@@ -26,8 +26,8 @@ export function CategoryProducts() {
   return (
     <>
       <Helmet>
-        <title>{categoryName} | SKML Mobiles</title>
-        <meta name="description" content={`Shop the best ${categoryName} at SKML Mobiles.`} />
+        <title>{categoryName} | HBGO</title>
+        <meta name="description" content={`Shop the best ${categoryName} at HBGO.`} />
       </Helmet>
 
       <div className="max-w-[1400px] mx-auto px-4 py-6">

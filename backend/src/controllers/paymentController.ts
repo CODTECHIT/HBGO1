@@ -54,7 +54,8 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
       },
     });
   } catch (error: any) {
-    next(new ErrorResponse(error.message, 500));
+    console.error("Razorpay Error:", error);
+    next(new ErrorResponse(error.message || "Failed to create Razorpay order", 500));
   }
 };
 

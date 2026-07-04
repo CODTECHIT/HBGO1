@@ -34,4 +34,4 @@ Since the repository is a unified codebase, deploy as follows:
 - **Razorpay:** Fetch your LIVE keys from the Razorpay dashboard.
 
 ## Custom Domain Setup
-In your Vercel project, go to **Settings > Domains** and add your apex domain (e.g. `skmlmobiles.com`). Configure the DNS records mapped to Vercel's nameservers.
+In your Vercel project, go to **Settings > Domains** and add your apex domain (e.g. `hbgo.com`). Configure the DNS records mapped to Vercel's nameservers.

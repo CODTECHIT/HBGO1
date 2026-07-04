@@ -15,7 +15,7 @@ export function Cart() {
   return (
     <>
       <Helmet>
-        <title>Shopping Cart | SKML Mobiles</title>
+        <title>Shopping Cart | HBGO</title>
       </Helmet>
 
       <div className="max-w-[1400px] mx-auto px-4 py-6">

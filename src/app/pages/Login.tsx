@@ -58,7 +58,7 @@ export function Login() {
   return (
     <>
       <Helmet>
-        <title>Login | SKML Mobiles</title>
+        <title>Login | HBGO</title>
       </Helmet>
       <div className="max-w-[500px] mx-auto px-4 py-20">
         <div className="bg-card border border-border rounded-2xl p-8 shadow-sm">

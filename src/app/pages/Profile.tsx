@@ -52,7 +52,7 @@ export function Profile() {
     return (
       <>
         <Helmet>
-          <title>My Wishlist | SKML Mobiles</title>
+          <title>My Wishlist | HBGO</title>
         </Helmet>
         <div className="max-w-[800px] mx-auto px-4 py-8 font-poppins">
           <button
@@ -146,7 +146,7 @@ export function Profile() {
   return (
     <>
       <Helmet>
-        <title>My Profile | SKML Mobiles</title>
+        <title>My Profile | HBGO</title>
       </Helmet>
       <div className="max-w-[800px] mx-auto px-4 py-8 font-poppins">
         <h1 className="font-bold text-2xl text-foreground mb-6">My Profile</h1>

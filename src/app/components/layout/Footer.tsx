@@ -2,7 +2,7 @@ import { Phone, MapPin, Mail, Shield, Facebook, Instagram, MessageCircle, Youtub
 import { Link } from "react-router";
 import { useGetSettings } from "../../hooks/useData";
 
-const INSTAGRAM_URL = "https://www.instagram.com/skml_mobiless_store_?utm_source=qr&igsh=MXNoa3E3bzg2MjhyYQ==";
+const INSTAGRAM_URL = "https://www.instagram.com/hbgo_store_?utm_source=qr&igsh=MXNoa3E3bzg2MjhyYQ==";
 
 export function Footer() {
   const { data: settings } = useGetSettings();

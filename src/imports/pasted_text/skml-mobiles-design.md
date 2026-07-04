@@ -1,11 +1,11 @@
-# SKML Mobiles — Figma Design Prompt
+# HBGO — Figma Design Prompt
 *(Reference: dynamokart.com layout, adapted to blue/teal tech identity + mobile-only catalog)*
 
 ---
 
 ## 1. PROJECT BRIEF (paste this as context in Figma AI / give to designer)
 
-Design a complete, responsive e-commerce website UI for **SKML Mobiles**, a mobile phones, accessories, spares & service retailer based in Yellamanchili, Anakapalli District, Andhra Pradesh. The business sells **both retail and wholesale**, has a physical store (running since 2023), and wants a modern marketplace-style website similar to DynamoKart's layout — but rebuilt entirely in a **blue/teal tech, trustworthy** visual identity suited to a mobile/electronics brand (not the orange/navy DynamoKart palette).
+Design a complete, responsive e-commerce website UI for **HBGO**, a mobile phones, accessories, spares & service retailer based in Yellamanchili, Anakapalli District, Andhra Pradesh. The business sells **both retail and wholesale**, has a physical store (running since 2023), and wants a modern marketplace-style website similar to DynamoKart's layout — but rebuilt entirely in a **blue/teal tech, trustworthy** visual identity suited to a mobile/electronics brand (not the orange/navy DynamoKart palette).
 
 Design for **Desktop (1440px)**, **Tablet (768px)**, and **Mobile (390px)** breakpoints, with a **bottom tab bar on mobile** replacing the top nav (Home / Categories / Cart / Orders / Profile).
 
@@ -13,11 +13,11 @@ Design for **Desktop (1440px)**, **Tablet (768px)**, and **Mobile (390px)** brea
 
 ## 2. BRAND IDENTITY
 
-- **Brand name:** SKML Mobiles
+- **Brand name:** HBGO
 - **Tagline suggestion:** "Your Trusted Mobile Store" / "Mobiles • Accessories • Service"
 - **Owner:** Boddapu Lokesh
 - **Location:** Near RTC Complex, Yellamanchili, Anakapalli District, AP — 531055
-- **Contact:** 6300200986 | skmlmobilesylm@gmail.com
+- **Contact:** 6300200986 | hbgo@gmail.com
 
 ### Color Palette (Blue/Teal — Tech & Trustworthy)
 | Role | Color | Hex |
@@ -40,7 +40,7 @@ Design for **Desktop (1440px)**, **Tablet (768px)**, and **Mobile (390px)** brea
 - Prices: **Inter Bold**, strikethrough MRP in grey, discount % in small blue/white pill
 
 ### Logo Concept
-Stylized "S" or phone-icon mark in cyan-blue gradient, paired with wordmark "SKML MOBILES" in deep teal, small tagline underneath in grey — mirroring DynamoKart's logo-lockup-with-tagline structure but phone-themed instead of cart/delivery-themed.
+Stylized "S" or phone-icon mark in cyan-blue gradient, paired with wordmark "HBGO" in deep teal, small tagline underneath in grey — mirroring DynamoKart's logo-lockup-with-tagline structure but phone-themed instead of cart/delivery-themed.
 
 ---
 
@@ -61,7 +61,7 @@ Stylized "S" or phone-icon mark in cyan-blue gradient, paired with wordmark "SKM
 ## 4. HOMEPAGE — DETAILED LAYOUT SPEC
 
 ### 4.1 Header (sticky, white background)
-- Left: SKML Mobiles logo
+- Left: HBGO logo
 - Location selector: "📍 Select Location ⌄" (Yellamanchili / Anakapalli default)
 - Center: Search bar — placeholder *"Search for mobiles, accessories, brands..."*
 - Right: Home | Categories | Orders | Profile (text nav, desktop only)
@@ -122,12 +122,12 @@ Mix of accessories + mobiles to show catalog range: earphones, neckband, charger
 - **Shop:** Categories · All Products · New Arrivals · Best Sellers · Brands
 - **My Account:** My Profile · Orders · Wishlist · Address Book
 - **Help & Support:** Help Center · Shipping Policy · Returns & Refunds · Cancellation Policy · FAQs · Contact Us
-- **About Us:** About SKML Mobiles · Become a Wholesale Partner · Terms & Conditions
-- **Get in Touch:** 📍 Near RTC Complex, Yellamanchili, Anakapalli Dist – 531055 · ✉️ skmlmobilesylm@gmail.com · 📞 +91 63002 00986 · 🛡️ "100% Secure Payments"
+- **About Us:** About HBGO · Become a Wholesale Partner · Terms & Conditions
+- **Get in Touch:** 📍 Near RTC Complex, Yellamanchili, Anakapalli Dist – 531055 · ✉️ hbgo@gmail.com · 📞 +91 63002 00986 · 🛡️ "100% Secure Payments"
 
 Bottom trust strip (4-up icons): **Genuine Products | Easy Returns | Fast Delivery | Secure Payments**
 Payment badges: Visa, Mastercard, UPI, Paytm, COD
-Copyright line: "© 2026 SKML Mobiles. All rights reserved."
+Copyright line: "© 2026 HBGO. All rights reserved."
 
 ---
 
@@ -198,4 +198,4 @@ Use a **darker, denser, data-focused** UI (sidebar nav layout, not the consumer 
 
 ## 10. DESIGN TONE SUMMARY
 
-Keep DynamoKart's proven **information density and card-grid marketplace rhythm**, but swap its navy/orange "general marketplace" feel for a **focused, trustworthy mobile-tech identity**: cleaner cyan-blue accents, teal-dark surfaces for header/footer/hero, and category iconography centered entirely on phones, accessories, spares, and service — reinforcing SKML Mobiles as a specialist store, not a generic marketplace.
+Keep DynamoKart's proven **information density and card-grid marketplace rhythm**, but swap its navy/orange "general marketplace" feel for a **focused, trustworthy mobile-tech identity**: cleaner cyan-blue accents, teal-dark surfaces for header/footer/hero, and category iconography centered entirely on phones, accessories, spares, and service — reinforcing HBGO as a specialist store, not a generic marketplace.

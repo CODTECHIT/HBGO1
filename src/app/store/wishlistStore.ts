@@ -30,6 +30,6 @@ export const useWishlistStore = create<WishlistState>()(
           return { wishlist: [...state.wishlist, id] };
         }),
     }),
-    { name: "skml-wishlist" }
+    { name: "hbgo-wishlist" }
   )
 );

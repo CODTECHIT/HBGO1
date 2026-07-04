@@ -63,8 +63,8 @@ export function ProductDetails() {
   return (
     <>
       <Helmet>
-        <title>{name} | SKML Mobiles</title>
-        <meta name="description" content={`Buy ${name} at the best price on SKML Mobiles.`} />
+        <title>{name} | HBGO</title>
+        <meta name="description" content={`Buy ${name} at the best price on HBGO.`} />
       </Helmet>
 
       <div className="max-w-[1400px] mx-auto px-4 py-8">

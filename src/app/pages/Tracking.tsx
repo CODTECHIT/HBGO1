@@ -41,7 +41,7 @@ export function Tracking() {
   return (
     <>
       <Helmet>
-        <title>Track Order {trackingId} | SKML Mobiles</title>
+        <title>Track Order {trackingId} | HBGO</title>
       </Helmet>
       <div className="max-w-[800px] mx-auto px-4 py-8">
         <div className="mb-6">

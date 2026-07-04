@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /profile
 Disallow: /checkout
-Sitemap: https://skmlmobiles.com/sitemap.xml
+Sitemap: https://hbgo.com/sitemap.xml

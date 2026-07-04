@@ -54,7 +54,7 @@ const sendEmail = async ({
   subject: string;
   html: string;
 }) => {
-  const from = process.env.EMAIL_FROM || "no-reply@skmlmobiles.com";
+  const from = process.env.EMAIL_FROM || "no-reply@hbgo.com";
 
   if (process.env.EMAIL_SERVICE === "resend" && process.env.RESEND_API_KEY) {
     try {
@@ -93,10 +93,10 @@ export const sendPasswordReset = async (email: string, resetUrl: string) => {
   const html = `
     <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #E2E8F0; border-radius: 16px; background-color: #ffffff;">
       <div style="text-align: center; margin-bottom: 24px;">
-        <h1 style="color: #0F172A; font-size: 22px; font-weight: 800; letter-spacing: 0.1em; margin: 0;">SKML MOBILES</h1>
+        <h1 style="color: #0F172A; font-size: 22px; font-weight: 800; letter-spacing: 0.1em; margin: 0;">HBGO</h1>
       </div>
       <h2 style="color: #1E293B; font-size: 18px; font-weight: 700; margin-top: 0; margin-bottom: 12px;">Password Reset Request</h2>
-      <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">You requested a password reset for your SKML Mobiles account. Click the button below to set up a new password:</p>
+      <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">You requested a password reset for your HBGO account. Click the button below to set up a new password:</p>
       <div style="text-align: center; margin-bottom: 24px;">
         <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #0E7C8C; color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(14, 124, 140, 0.2);">Reset Password</a>
       </div>
@@ -112,7 +112,7 @@ export const sendOrderConfirmation = async (email: string, orderId: string, tota
   const html = `
     <div style="font-family: 'Poppins', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #E2E8F0; border-radius: 16px; background-color: #ffffff;">
       <div style="text-align: center; margin-bottom: 24px;">
-        <h1 style="color: #0F172A; font-size: 22px; font-weight: 800; letter-spacing: 0.1em; margin: 0;">SKML MOBILES</h1>
+        <h1 style="color: #0F172A; font-size: 22px; font-weight: 800; letter-spacing: 0.1em; margin: 0;">HBGO</h1>
       </div>
       <h2 style="color: #10B981; font-size: 18px; font-weight: 700; margin-top: 0; margin-bottom: 12px;">Thank You for Your Order!</h2>
       <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">Your order has been placed successfully and is being processed.</p>
@@ -159,7 +159,7 @@ export const sendInvoice = async (email: string, orderDetails: any) => {
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
         <tr>
           <td>
-            <h1 style="color: #0E7C8C; font-size: 24px; font-weight: 800; letter-spacing: 0.05em; margin: 0;">SKML MOBILES</h1>
+            <h1 style="color: #0E7C8C; font-size: 24px; font-weight: 800; letter-spacing: 0.05em; margin: 0;">HBGO</h1>
             <p style="color: #64748B; font-size: 12px; margin: 4px 0 0 0;">Mobile E-Commerce Invoice</p>
           </td>
           <td style="text-align: right; vertical-align: top;">
@@ -261,7 +261,7 @@ export const sendDeliveryUpdate = async (email: string, orderId: string) => {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Order Delivered!</h2>
       <p>Your order <strong>${orderId}</strong> has been successfully delivered.</p>
-      <p>Thank you for shopping with SKML Mobiles!</p>
+      <p>Thank you for shopping with HBGO!</p>
     </div>
   `;
   await sendEmail({ to: email, subject, html });

@@ -25,7 +25,7 @@ export function Search() {
   return (
     <>
       <Helmet>
-        <title>Search Results for "{query}" | SKML Mobiles</title>
+        <title>Search Results for "{query}" | HBGO</title>
       </Helmet>
 
       <div className="max-w-[1400px] mx-auto px-4 py-8">
